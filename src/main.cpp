@@ -4,7 +4,7 @@
 
 #define N 100
 
-class Pelota {
+class Individuo {
 
     private:
 
@@ -17,9 +17,9 @@ class Pelota {
     bool anticuerpos = false;
 
     public:
-    static std::vector<Pelota*> allShapes;
+    static std::vector<Individuo*> allShapes;
 
-    Pelota(int x0, int y0, int u0, int v0, bool enfermo) : shape(6.f), x(x0), y(y0), u(u0), v(v0) {
+    Individuo(int x0, int y0, int u0, int v0, bool enfermo) : shape(6.f), x(x0), y(y0), u(u0), v(v0) {
         shape.setFillColor(sf::Color::Green);
         this->enfermo = enfermo? 400 : 0;
         allShapes.push_back(this);
@@ -36,7 +36,7 @@ class Pelota {
 
         const sf::FloatRect r = shape.getGlobalBounds();
 
-        for (Pelota* other : allShapes) {
+        for (Individuo* other : allShapes) {
             if (this == other) continue;
 
             if (enfermo && shape.getGlobalBounds().intersects(other->shape.getGlobalBounds())) {
@@ -67,13 +67,13 @@ class Pelota {
     }
 
 
-    void contagiar(Pelota* otro) {
+    void contagiar(Individuo* otro) {
         otro->enfermo = 400;
     }
 };
 
 
-std::vector<Pelota*> Pelota::allShapes;
+std::vector<Individuo*> Individuo::allShapes;
 
 
 
@@ -87,12 +87,12 @@ int main(int argc, char const *argv[])
     sf::Color colors[6] = {sf::Color::Blue, sf::Color::Red, sf::Color::Green, sf::Color::Yellow, sf::Color::Cyan, sf::Color::Magenta};
     int vectors[8][2] = {{-2,-1}, {-1,-2},{2,-1},{-1,2},{-2,1},{1,-2},{2,1},{1,2}};
 
-    Pelota* p[N];
+    Individuo* p[N];
 
     for (size_t i = 0; i < N; i++)
     {
         int dir = rand()%8;
-        p[i] = new Pelota(rand()%800, rand()%500, vectors[dir][0], vectors[dir][1], i==0);
+        p[i] = new Individuo(rand()%800, rand()%500, vectors[dir][0], vectors[dir][1], i==0);
     }
     
 
